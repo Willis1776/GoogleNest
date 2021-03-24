@@ -274,6 +274,7 @@ namespace GoogleNest
             }
             catch (Exception e)
             {
+                DebugLogic.Log(">>> ERROR: Exception ocurred in Thermostat: RunFan(ushort)" + e, DebugLogic.ErrorLevel.Error, true);
             }
         }
 
@@ -298,6 +299,7 @@ namespace GoogleNest
             }
             catch (Exception e)
             {
+                DebugLogic.Log(">>> ERROR: Exception ocurred in Thermostat: FanOff()" + e, DebugLogic.ErrorLevel.Error, true);
             }
         }
 

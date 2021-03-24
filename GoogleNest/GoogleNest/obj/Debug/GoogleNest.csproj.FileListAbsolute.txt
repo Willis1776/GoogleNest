@@ -9,3 +9,14 @@ C:\Users\mathew.klucznyk\OneDrive - Global USS\Crestron Modules\Mat\SIMPLSharp P
 C:\Users\mathew.klucznyk\OneDrive - Global USS\Crestron Modules\Mat\SIMPLSharp Projects\GoogleNest\GoogleNest\GoogleNest\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\mathew.klucznyk\OneDrive - Global USS\Crestron Modules\Mat\SIMPLSharp Projects\GoogleNest\GoogleNest\GoogleNest\obj\Debug\GoogleNest.dll
 C:\Users\mathew.klucznyk\OneDrive - Global USS\Crestron Modules\Mat\SIMPLSharp Projects\GoogleNest\GoogleNest\GoogleNest\obj\Debug\GoogleNest.pdb
+C:\Users\Willis\Code\GoogleNest\GoogleNest\GoogleNest\bin\Debug\GoogleNest.dll
+C:\Users\Willis\Code\GoogleNest\GoogleNest\GoogleNest\bin\Debug\GoogleNest.pdb
+C:\Users\Willis\Code\GoogleNest\GoogleNest\GoogleNest\bin\Debug\SimplSharpCustomAttributesInterface.dll
+C:\Users\Willis\Code\GoogleNest\GoogleNest\GoogleNest\bin\Debug\SimplSharpHelperInterface.dll
+C:\Users\Willis\Code\GoogleNest\GoogleNest\GoogleNest\bin\Debug\SimplSharpNewtonsoft.dll
+C:\Users\Willis\Code\GoogleNest\GoogleNest\GoogleNest\bin\Debug\SimplSharpReflectionInterface.dll
+C:\Users\Willis\Code\GoogleNest\GoogleNest\GoogleNest\bin\Debug\SimplSharpSQLHelperInterface.dll
+C:\Users\Willis\Code\GoogleNest\GoogleNest\GoogleNest\bin\Debug\Newtonsoft.Json.Compact.dll
+C:\Users\Willis\Code\GoogleNest\GoogleNest\GoogleNest\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Willis\Code\GoogleNest\GoogleNest\GoogleNest\obj\Debug\GoogleNest.dll
+C:\Users\Willis\Code\GoogleNest\GoogleNest\GoogleNest\obj\Debug\GoogleNest.pdb

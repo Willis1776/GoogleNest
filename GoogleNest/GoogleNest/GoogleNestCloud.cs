@@ -39,6 +39,8 @@ namespace GoogleNest
             {
                 refreshTokenFilePath = string.Format(@"\user\{0}\", Directory.GetApplicationDirectory().Replace("/", "\\").Split('\\')[2]);
 
+                DebugLogic.Log(">>> LOGGING: refreshTokenFilePath: " + refreshTokenFilePath, DebugLogic.ErrorLevel.Notice, true);
+
                 if (File.Exists(refreshTokenFilePath + refreshTokenFileName))
                 {
                     using (StreamReader reader = new StreamReader(File.OpenRead(refreshTokenFilePath + refreshTokenFileName)))
@@ -103,7 +105,7 @@ namespace GoogleNest
                     onIsInitialized(0);
                 }
 
-                ErrorLog.Exception("Exception ocurred in Initialize", e);
+                DebugLogic.Log(">>> ERROR: Exception ocurred in Initialize" + e, DebugLogic.ErrorLevel.Error, true);
             }
         }
 
@@ -155,7 +157,7 @@ namespace GoogleNest
             }
             catch (Exception e)
             {
-                ErrorLog.Exception("Exception ocurred in UseRefreshToken", e);
+                DebugLogic.Log(">>> ERROR: Exception ocurred in UseRefreshToken" + e, DebugLogic.ErrorLevel.Error, true);
             }
         }
 
@@ -164,7 +166,7 @@ namespace GoogleNest
         {
             try
             {
-                using (HttpsClient client = new HttpsClient())
+                using (var client = new HttpsClient())
                 {
                     client.TimeoutEnabled = true;
                     client.Timeout = 10;
@@ -172,51 +174,61 @@ namespace GoogleNest
                     client.PeerVerification = false;
                     client.AllowAutoRedirect = false;
 
-                    HttpsClientRequest request = new HttpsClientRequest();
+                    var request = new HttpsClientRequest();
 
-                    request.Url.Parse("https://www.googleapis.com/oauth2/v4/token?client_id=" + ClientID + "&code=" + AuthCode + "&grant_type=authorization_code&redirect_uri=https://www.google.com&client_secret=" + ClientSecret);
+                    var url = "https://www.googleapis.com/oauth2/v4/token?client_id=" + ClientID + "&code=" + AuthCode +
+                              "&grant_type=authorization_code&redirect_uri=https://www.google.com&client_secret=" +
+                              ClientSecret;
+
+                    request.Url.Parse(url);
+
+                    DebugLogic.Log(">>> LOGGING: GetTokenAndRefreshToken: URL: " + url, DebugLogic.ErrorLevel.Notice, true);
+
                     request.RequestType = RequestType.Post;
+                    request.Header.SetHeaderValue("Content-Type", "application/json; charset=utf-8");
 
-                    HttpsClientResponse response = client.Dispatch(request);
+                    var response = client.Dispatch(request);
 
-                    if (response.ContentString != null)
+                    if (response.ContentString == null) return;
+
+                    if (response.ContentString.Length <= 0) return;
+
+                    DebugLogic.Log(">>> LOGGING: GetTokenAndRefreshToken: Response Content String - Not Parsed: " + response.ContentString, DebugLogic.ErrorLevel.Notice, true);
+
+                    var body = JObject.Parse(response.ContentString);
+                    DebugLogic.Log(">>> LOGGING: GetTokenAndRefreshToken: Parsed String: " + body.ToString(), DebugLogic.ErrorLevel.Notice, true);
+
+                    if (body["expires_in"] != null)
                     {
-                        if (response.ContentString.Length > 0)
-                        {
-                            JObject body = JObject.Parse(response.ContentString);
+                        var seconds = Convert.ToInt16(body["expires_in"].ToString().Replace("\"", string.Empty)) - 10;
+                        var milliseconds = seconds * 1000;
 
-                            if (body["expires_in"] != null)
-                            {
-                                var seconds = Convert.ToInt16(body["expires_in"].ToString().Replace("\"", string.Empty)) - 10;
-                                var milliseconds = seconds * 1000;
-
-                                refreshTimer = new CTimer(UseRefreshToken, milliseconds);
-                            }
-                            if (body["access_token"] != null)
-                            {
-                                Token = body["access_token"].ToString().Replace("\"", string.Empty);
-                            }
-                            if (body["token_type"] != null)
-                            {
-                                TokenType = body["token_type"].ToString().Replace("\"", string.Empty);
-                            }
-                            if (body["refresh_token"] != null)
-                            {
-                                refreshToken = body["refresh_token"].ToString().Replace("\"", string.Empty);
-
-                                using (StreamWriter writer = new StreamWriter(File.Create(refreshTokenFilePath + refreshTokenFileName)))
-                                {
-                                    writer.WriteLine(refreshToken);
-                                }
-                            }
-                        }
+                        refreshTimer = new CTimer(UseRefreshToken, milliseconds);
                     }
 
+                    if (body["access_token"] != null)
+                    {
+                        Token = body["access_token"].ToString().Replace("\"", string.Empty);
+                    }
+
+                    if (body["token_type"] != null)
+                    {
+                        TokenType = body["token_type"].ToString().Replace("\"", string.Empty);
+                    }
+
+                    if (body["refresh_token"] == null) return;
+
+                    refreshToken = body["refresh_token"].ToString().Replace("\"", string.Empty);
+
+                    using (var writer = new StreamWriter(File.Create(refreshTokenFilePath + refreshTokenFileName)))
+                    {
+                        writer.WriteLine(refreshToken);
+                    }
                 }
             }
             catch (Exception e)
             {
-                ErrorLog.Exception("Exception ocurred in GetTokenAndRefreshToken", e);
+                DebugLogic.Log(">>> ERROR: Exception ocurred in GetTokenAndRefreshToken" + e, DebugLogic.ErrorLevel.Error, true);
             }
         }
 
@@ -225,7 +237,7 @@ namespace GoogleNest
         {
             try
             {
-                using (HttpsClient client = new HttpsClient())
+                using (var client = new HttpsClient())
                 {
                     client.TimeoutEnabled = true;
                     client.Timeout = 10;
@@ -266,7 +278,7 @@ namespace GoogleNest
             }
             catch (Exception e)
             {
-                ErrorLog.Exception("Exception ocurred in GetDevices", e);
+                DebugLogic.Log(">>> ERROR: Exception ocurred in GetDevices" + e, DebugLogic.ErrorLevel.Error, true);
             }
         }
     }

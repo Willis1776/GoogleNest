@@ -143,6 +143,7 @@ namespace GoogleNest
             }
             catch (Exception e)
             {
+                DebugLogic.Log(">>> ERROR: Exception ocurred in Thermostat: SetCool(ushort)" + e, DebugLogic.ErrorLevel.Error, true);
             }
         }
 
@@ -179,6 +180,7 @@ namespace GoogleNest
             }
             catch (Exception e)
             {
+                DebugLogic.Log(">>> ERROR: Exception ocurred in Thermostat: SetHeat(ushort)" + e, DebugLogic.ErrorLevel.Error, true);
             }
         }
 
@@ -220,6 +222,7 @@ namespace GoogleNest
             }
             catch (Exception e)
             {
+                DebugLogic.Log(">>> ERROR: Exception ocurred in Thermostat: SetRange(ushort, ushort)" + e, DebugLogic.ErrorLevel.Error, true);
             }
         }  
 
@@ -243,6 +246,7 @@ namespace GoogleNest
                 }
             catch (Exception e)
             {
+                DebugLogic.Log(">>> ERROR: Exception ocurred in Thermostat: SetHvacMode(string)" + e, DebugLogic.ErrorLevel.Error, true);
             }
         }
 
@@ -266,6 +270,7 @@ namespace GoogleNest
             }
             catch (Exception e)
             {
+                DebugLogic.Log(">>> ERROR: Exception ocurred in Thermostat: SetEcoMode(string)" + e, DebugLogic.ErrorLevel.Error, true);
             }
         }
     }
